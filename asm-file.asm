@@ -7,20 +7,26 @@ msg db "assebly procedure end now",0
 
 
 .code
-asmfunc PROC p1:DWORD, p2:DWORD
+asmfunc PROC array:DWORD, num:DWORD
     
-    push ebp
-    mov ebp,esp
-    mov eax, [ebp+12
-\] ; Move the first parameter into EAX
-    call writedec
-    call crlf
-    ;add eax, p2 ; Add the second parameter to EAX
-    call writedec
-    call crlf
-    mov edx, offset msg
-    call writestring
-    call crlf
+    mov esi,array
+    mov edi,num
+    mov ecx,7
+
+lopnum:
+ mov eax,0
+ mov eax,[esi]
+ cmp eax,0
+ jz skipzero
+
+ mov eax,[edi]
+add eax,1 
+mov [edi],eax 
+
+    
+skipzero:
+add esi,4
+    loop lopnum
     
     ret
 asmfunc ENDP
